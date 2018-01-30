@@ -5,7 +5,7 @@ class TimeConverter:
         # Quit when something unexpected was found.
         # In Some cases weird characters are detected which can not be parsed.
         if (len(digits) > 4):
-            return False
+            return None
 
         # See if the timer ended.
         if self.__isEndState(digits):

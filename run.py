@@ -31,7 +31,7 @@ print("OCR detected: " + characters)
 
 # Convert characters to time in seconds.
 seconds = timeConverter.toSeconds(characters)
-if (isinstance(seconds, int)):
+if seconds is not None:
     print("Seconds: " + str(seconds))
 
     # Push time to Laundry service.
