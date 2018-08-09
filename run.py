@@ -15,28 +15,23 @@ laundryService = LaundryService(
     token=environ.get("LAUNDRY_ADMIN_MACHINE_TOKEN"),
     machineId=environ.get("LAUNDRY_ADMIN_MACHINE_ID")
 )
-# Initialize camera.
-camera = Camera()
-# Initialize OCR.
-ocr = Ocr()
-# Initialize time converter.
-timeConverter = TimeConverter();
 
 # Take a picture.
-imageStream = camera.capture()
+imageStream = Camera().capture()
 
 # Detect characters in image.
-characters = ocr.parse(imageStream)
-print("OCR detected: " + characters)
+characters = Ocr().parse(imageStream)
 
-# Convert characters to time in seconds.
-seconds = timeConverter.toSeconds(characters)
-if seconds is not None:
-    print("Seconds: " + str(seconds))
+if characters is not None:
+    # Convert characters to time in seconds.
+    seconds =  TimeConverter().toSeconds(characters)
 
-    # Push time to Laundry service.
-    pushed = laundryService.push(seconds)
-    if pushed:
-        print("Time successfully pushed to Laundry Service.")
-    else:
-        print("Failed to push time to Laundry Service.")
+    if seconds is not None:
+        print("Seconds: " + str(seconds))
+
+        # Push time to Laundry service.
+        pushed = laundryService.push(seconds)
+        if pushed:
+            print("Time successfully pushed to Laundry Service.")
+        else:
+            print("Failed to push time to Laundry Service.")
