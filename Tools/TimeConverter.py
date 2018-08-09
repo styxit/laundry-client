@@ -8,7 +8,9 @@ class TimeConverter:
 
         # Quit when something unexpected was found.
         # In Some cases weird characters are detected which can not be parsed.
-        if (len(digits) > 4 or not digits.isdigit()):
+        # Image show h:mm, so 3 numbers.
+        # When 4 characters are found, the ":" was detected as a character.
+        if (len(digits) not in [3, 4] or not digits.isdigit()):
             return None
 
         # Sum and return remaining hours and minutes as seconds.
@@ -33,7 +35,7 @@ class TimeConverter:
             # (string) "12" becomes (int) 12.
             minutesRemaining = int(digits[-2] + digits[-1])
 
-        # Minutes in seconds.
+        # Minutes to seconds.
         return minutesRemaining * 60
 
     def __getHoursAsSeconds(self, digits):
