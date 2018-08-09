@@ -12,7 +12,7 @@ class Ocr:
 
         # Construct command.
         # End with "-" to read image from stdin.
-        command = ["ocr"] + config + ["-"]
+        command = ["ssocr"] + config + ["-"]
 
         try:
             characters = subprocess.check_output(
