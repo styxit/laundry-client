@@ -1,8 +1,27 @@
-from subprocess import check_output
+import subprocess
+
+from Tools.ArgumentConfigLoader import ArgumentConfigLoader
 
 class Ocr:
 
     def parse(self, imageStream):
-        print("Detect text in image")
+        print("Detecting text in image")
 
-        return check_output(["ssocr", "-d", "-1", "-t", "65", "make_mono", "invert", "-"], stdin=imageStream).decode("utf-8").strip()
+        # Load the ssocr config.
+        config = ArgumentConfigLoader('ocr').list()
+
+        # Construct command.
+        # End with "-" to read image from stdin.
+        command = ["ocr"] + config + ["-"]
+
+        try:
+            characters = subprocess.check_output(
+                command,
+                stdin=imageStream
+            ).decode("utf-8").strip()
+        except subprocess.CalledProcessError as exception:
+            print("OCR failed, exit code: " + str(exception.returncode))
+            return None
+
+        print("OCR detected: " + characters)
+        return characters

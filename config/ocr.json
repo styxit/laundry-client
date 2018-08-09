@@ -1,0 +1,11 @@
+[
+  "--number-digits",
+  "-1",
+
+  "--threshold",
+  "65",
+
+  "make_mono",
+
+  "invert"
+]
