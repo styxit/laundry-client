@@ -1,9 +1,19 @@
 from subprocess import Popen, PIPE
 
+from Tools.ArgumentConfigLoader import ArgumentConfigLoader
+
 class Camera:
+    command = ["raspistill", "--output", "-"]
+
     def capture(self):
+        # Load the camera config.
+        config = ArgumentConfigLoader('camera').list()
+
         print("Taking a picture.")
-        proc = Popen(["raspistill", "-o", "-", "--width", "600", "--height", "500", "--rotation", "270"], stdout=PIPE)
+        proc = Popen(
+            self.command + config,
+            stdout=PIPE
+        )
         print("Finished taking a picture")
 
         # Return the image stream.
